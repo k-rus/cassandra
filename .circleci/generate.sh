@@ -22,10 +22,18 @@ BASEDIR=`dirname $0`
 die ()
 {
   echo "ERROR: $*"
-  echo "Usage: $0 [-l|-m|-h]"
+  echo "Usage: $0 [-l|-m|-h|-e]"
   echo "   -l Generate config.yml using low resources"
   echo "   -m Generate config.yml using mid resources"
   echo "   -h Generate config.yml using high resources"
+  echo "   -e <key=value> Enviroment variables to be used in the generated config.yml, e.g.:"
+  echo "                   -e DTEST_BRANCH=CASSANDRA-8272"
+  echo "                   -e DTEST_REPO=git://github.com/adelapena/cassandra-dtest.git"
+  echo "                   -e REPEATED_UTEST_CLASS=org.apache.cassandra.cql3.ViewTest"
+  echo "                   -e REPEATED_UTEST_METHODS=testCompoundPartitionKey,testStaticTable"
+  echo "                   -e REPEATED_UTEST_COUNT=100"
+  echo "                  If you want to specify multiple environment variables simply add"
+  echo "                  multiple -e options. The flags -l/-m/-h should be used when using -e."
   echo "   No flags generates the default config.yml using low resources and the three"
   echo "   templates (config.yml.LOWRES, config.yml.MIDRES and config.yml.HIGHRES)"
   exit 1
@@ -34,7 +42,8 @@ die ()
 lowres=false
 midres=false
 highres=false
-while getopts ":lmh" opt; do
+envvars=()
+while getopts "e:lmh" opt; do
   case $opt in
       l ) ($midres || $highres) && die "Cannot specify option -l after specifying options -m or -h"
           lowres=true
@@ -44,6 +53,9 @@ while getopts ":lmh" opt; do
           ;;
       h ) ($lowres || $midres) && die "Cannot specify option -h after specifying options -l or -m"
           highres=true
+          ;;
+      e ) !($lowres || $midres || $highres) && die "Cannot specify option -e without first specifying options -l, -m or -h"
+          envvars+=($OPTARG)
           ;;
       \?) die "Invalid option: -$OPTARG"
           ;;
@@ -94,4 +106,13 @@ else
   cp $BASEDIR/config.yml.LOWRES $BASEDIR/config.yml
 fi
 
+# replace environment variables
+IFS='='
+for i in "${envvars[@]}"; do
+  read -a entry <<< "$i"
+  key=${entry[0]}
+  val=${entry[1]}
+  echo "Setting environment variable $key: $val"
+  sed -i '' "s|- $key:.*|- $key: $val|" $BASEDIR/config.yml
+done
 
