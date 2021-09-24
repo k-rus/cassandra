@@ -56,29 +56,25 @@ all=false
 lowres=false
 midres=false
 highres=false
+has_envvars=false
 envvars=""
 check_envvars=true
 while getopts "e:almhf" opt; do
   case $opt in
-      a ) ($lowres || $midres || $highres) && die "Cannot specify option -a after specifying options -l, -m or -h"
-          all=true
+      a ) all=true
           ;;
-      l ) ($all || $midres || $highres) && die "Cannot specify option -l after specifying options -a, -m or -h"
-          lowres=true
+      l ) lowres=true
           ;;
-      m ) ($all || $lowres || $highres) && die "Cannot specify option -m after specifying options -a, -l or -h"
-          midres=true
+      m ) midres=true
           ;;
-      h ) ($all || $lowres || $midres) && die "Cannot specify option -h after specifying options -a, -l or -m"
-          highres=true
+      h ) highres=true
           ;;
-      e ) $all && die "Cannot specify option -e after specifying options -a"
-          !($lowres || $midres || $highres) && die "Cannot specify option -e without first specifying options -l, -m or -h"
-          if [ "x$envvars" = "x" ]; then
+      e ) if [ !$has_envars ]; then
             envvars="$OPTARG"
           else
             envvars="$envvars|$OPTARG"
           fi
+          has_envvars=true
           ;;
       f ) check_envvars=false
           ;;
@@ -88,12 +84,14 @@ while getopts "e:almhf" opt; do
 done
 
 if $lowres; then
+  ($all || $midres || $highres) && die "Cannot use option -l with options -a, -m or -h"
   echo "Generating new config.yml file with low resources from config-2_1.yml"
   circleci config process $BASEDIR/config-2_1.yml > $BASEDIR/config.yml.LOWRES.tmp
   cat $BASEDIR/license.yml $BASEDIR/config.yml.LOWRES.tmp > $BASEDIR/config.yml
   rm $BASEDIR/config.yml.LOWRES.tmp
 
 elif $midres; then
+  ($all || $lowres || $highres) && die "Cannot use option -m with options -a, -l or -h"
   echo "Generating new config.yml file with middle resources from config-2_1.yml"
   patch -o $BASEDIR/config-2_1.yml.MIDRES $BASEDIR/config-2_1.yml $BASEDIR/config-2_1.yml.mid_res.patch
   circleci config process $BASEDIR/config-2_1.yml.MIDRES > $BASEDIR/config.yml.MIDRES.tmp
@@ -101,6 +99,7 @@ elif $midres; then
   rm $BASEDIR/config-2_1.yml.MIDRES $BASEDIR/config.yml.MIDRES.tmp
 
 elif $highres; then
+  ($all || $lowres || $midres) && die "Cannot use option -h with options -a, -l or -m"
   echo "Generating new config.yml file with high resources from config-2_1.yml"
   patch -o $BASEDIR/config-2_1.yml.HIGHRES $BASEDIR/config-2_1.yml $BASEDIR/config-2_1.yml.high_res.patch
   circleci config process $BASEDIR/config-2_1.yml.HIGHRES > $BASEDIR/config.yml.HIGHRES.tmp
@@ -108,6 +107,7 @@ elif $highres; then
   rm $BASEDIR/config-2_1.yml.HIGHRES $BASEDIR/config.yml.HIGHRES.tmp
 
 elif $all; then
+  ($lowres || $midres || $highres || $has_envars) && die "Cannot use option -a with options -l, -m, -h or -e"
   echo "Generating new config.yml file with low resources and LOWRES/MIDRES/HIGHRES templates from config-2_1.yml"
 
   # setup lowres
@@ -130,12 +130,12 @@ elif $all; then
   # copy lower into config.yml to make sure this gets updated
   cp $BASEDIR/config.yml.LOWRES $BASEDIR/config.yml
 
-else
+elif [ ! $has_envvars ]; then
   print_help
 fi
 
 # replace environment variables
-if [ "x$envvars" != "x" ]; then
+if [ $has_envvars ]; then
   IFS='='
   echo "$envvars" | tr '|' '\n' | while read entry; do
     set -- $entry
