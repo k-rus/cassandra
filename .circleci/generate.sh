@@ -22,7 +22,16 @@ BASEDIR=`dirname $0`
 die ()
 {
   echo "ERROR: $*"
+  print_help
+  exit 1
+}
+
+print_help()
+{
   echo "Usage: $0 [-l|-m|-h|-f|-e]"
+  echo "   -a Generate the default config.yml using low resources and the three templates"
+  echo "      (config.yml.LOWRES, config.yml.MIDRES and config.yml.HIGHRES). Use this for"
+  echo "      permanent changes in config-2_1.yml that will be committed to the main repo."
   echo "   -l Generate config.yml using low resources"
   echo "   -m Generate config.yml using mid resources"
   echo "   -h Generate config.yml using high resources"
@@ -41,28 +50,30 @@ die ()
   echo "                  If you want to specify multiple environment variables simply add"
   echo "                  multiple -e options. The flags -l/-m/-h should be used when using -e."
   echo "   -f Stop checking that the enviroment variables are known"
-  echo "   No flags generates the default config.yml using low resources and the three"
-  echo "   templates (config.yml.LOWRES, config.yml.MIDRES and config.yml.HIGHRES)"
-  exit 1
 }
 
+all=false
 lowres=false
 midres=false
 highres=false
 envvars=""
 check_envvars=true
-while getopts "e:lmhf" opt; do
+while getopts "e:almhf" opt; do
   case $opt in
-      l ) ($midres || $highres) && die "Cannot specify option -l after specifying options -m or -h"
+      a ) ($lowres || $midres || $highres) && die "Cannot specify option -a after specifying options -l, -m or -h"
+          all=true
+          ;;
+      l ) ($all || $midres || $highres) && die "Cannot specify option -l after specifying options -a, -m or -h"
           lowres=true
           ;;
-      m ) ($lowres || $highres) && die "Cannot specify option -m after specifying options -l or -h"
+      m ) ($all || $lowres || $highres) && die "Cannot specify option -m after specifying options -a, -l or -h"
           midres=true
           ;;
-      h ) ($lowres || $midres) && die "Cannot specify option -h after specifying options -l or -m"
+      h ) ($all || $lowres || $midres) && die "Cannot specify option -h after specifying options -a, -l or -m"
           highres=true
           ;;
-      e ) !($lowres || $midres || $highres) && die "Cannot specify option -e without first specifying options -l, -m or -h"
+      e ) $all && die "Cannot specify option -e after specifying options -a"
+          !($lowres || $midres || $highres) && die "Cannot specify option -e without first specifying options -l, -m or -h"
           if [ "x$envvars" = "x" ]; then
             envvars="$OPTARG"
           else
@@ -96,7 +107,7 @@ elif $highres; then
   cat $BASEDIR/license.yml $BASEDIR/config.yml.HIGHRES.tmp > $BASEDIR/config.yml
   rm $BASEDIR/config-2_1.yml.HIGHRES $BASEDIR/config.yml.HIGHRES.tmp
 
-else
+elif $all; then
   echo "Generating new config.yml file with low resources and LOWRES/MIDRES/HIGHRES templates from config-2_1.yml"
 
   # setup lowres
@@ -118,37 +129,42 @@ else
 
   # copy lower into config.yml to make sure this gets updated
   cp $BASEDIR/config.yml.LOWRES $BASEDIR/config.yml
+
+else
+  print_help
 fi
 
 # replace environment variables
-IFS='='
-echo "$envvars" | tr '|' '\n' | while read entry; do
-  set -- $entry
-  key=$1
-  val=$2
-  if $check_envvars &&
-     [ "$key" != "DTEST_REPO" ] &&
-     [ "$key" != "DTEST_BRANCH" ] &&
-     [ "$key" != "REPEATED_UTEST_TARGET" ] &&
-     [ "$key" != "REPEATED_UTEST_CLASS" ] &&
-     [ "$key" != "REPEATED_UTEST_METHODS" ] &&
-     [ "$key" != "REPEATED_UTEST_COUNT" ] &&
-     [ "$key" != "REPEATED_UTEST_STOP_ON_FAILURE" ] &&
-     [ "$key" != "REPEATED_DTEST_NAME" ] &&
-     [ "$key" != "REPEATED_DTEST_VNODES" ] &&
-     [ "$key" != "REPEATED_DTEST_COUNT" ] &&
-     [ "$key" != "REPEATED_DTEST_STOP_ON_FAILURE" ] &&
-     [ "$key" != "REPEATED_UPGRADE_DTEST_NAME" ] &&
-     [ "$key" != "REPEATED_UPGRADE_DTEST_COUNT" ] &&
-     [ "$key" != "REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE" ] &&
-     [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_CLASS" ] &&
-     [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_METHODS" ] &&
-     [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_COUNT" ] &&
-     [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_STOP_ON_FAILURE" ]; then
-    die "Unrecognised environment variable name: $key"
-  fi
-  echo "Setting environment variable $key: $val"
-  sed -i '' "s|- $key:.*|- $key: $val|" $BASEDIR/config.yml
-done
-unset IFS
+if [ "x$envvars" != "x" ]; then
+  IFS='='
+  echo "$envvars" | tr '|' '\n' | while read entry; do
+    set -- $entry
+    key=$1
+    val=$2
+    if $check_envvars &&
+       [ "$key" != "DTEST_REPO" ] &&
+       [ "$key" != "DTEST_BRANCH" ] &&
+       [ "$key" != "REPEATED_UTEST_TARGET" ] &&
+       [ "$key" != "REPEATED_UTEST_CLASS" ] &&
+       [ "$key" != "REPEATED_UTEST_METHODS" ] &&
+       [ "$key" != "REPEATED_UTEST_COUNT" ] &&
+       [ "$key" != "REPEATED_UTEST_STOP_ON_FAILURE" ] &&
+       [ "$key" != "REPEATED_DTEST_NAME" ] &&
+       [ "$key" != "REPEATED_DTEST_VNODES" ] &&
+       [ "$key" != "REPEATED_DTEST_COUNT" ] &&
+       [ "$key" != "REPEATED_DTEST_STOP_ON_FAILURE" ] &&
+       [ "$key" != "REPEATED_UPGRADE_DTEST_NAME" ] &&
+       [ "$key" != "REPEATED_UPGRADE_DTEST_COUNT" ] &&
+       [ "$key" != "REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE" ] &&
+       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_CLASS" ] &&
+       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_METHODS" ] &&
+       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_COUNT" ] &&
+       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_STOP_ON_FAILURE" ]; then
+      die "Unrecognised environment variable name: $key"
+    fi
+    echo "Setting environment variable $key: $val"
+    sed -i '' "s|- $key:.*|- $key: $val|" $BASEDIR/config.yml
+  done
+  unset IFS
+fi
 
