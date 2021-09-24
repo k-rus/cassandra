@@ -44,7 +44,7 @@ installed.
 
 ## Setting envrinonment variables
 Both `config-2_1.yml` and `config.yml` files contain a set of environment variables 
-defining things like what dtest repo and branch to use, what tests should be repeatedly 
+defining things like what dtest repo and branch to use, what tests could be repeatedly 
 run, etc.
 
 These environment variables can be directly edited in the `config.yml` file, although if 
