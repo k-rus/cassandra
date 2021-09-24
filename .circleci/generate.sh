@@ -34,6 +34,7 @@ die ()
   echo "                   -e REPEATED_UTEST_COUNT=100"
   echo "                  If you want to specify multiple environment variables simply add"
   echo "                  multiple -e options. The flags -l/-m/-h should be used when using -e."
+  echo "   -f Stop checking that the enviroment variables are known"
   echo "   No flags generates the default config.yml using low resources and the three"
   echo "   templates (config.yml.LOWRES, config.yml.MIDRES and config.yml.HIGHRES)"
   exit 1
@@ -43,7 +44,8 @@ lowres=false
 midres=false
 highres=false
 envvars=""
-while getopts "e:lmh" opt; do
+check_envvars=true
+while getopts "e:lmhf" opt; do
   case $opt in
       l ) ($midres || $highres) && die "Cannot specify option -l after specifying options -m or -h"
           lowres=true
@@ -60,6 +62,8 @@ while getopts "e:lmh" opt; do
           else
             envvars="$envvars|$OPTARG"
           fi
+          ;;
+      f ) check_envvars=false
           ;;
       \?) die "Invalid option: -$OPTARG"
           ;;
@@ -116,6 +120,27 @@ echo "$envvars" | tr '|' '\n' | while read entry; do
   set -- $entry
   key=$1
   val=$2
+  if $check_envvars &&
+     [ "$key" != "DTEST_REPO" ] &&
+     [ "$key" != "DTEST_BRANCH" ] &&
+     [ "$key" != "REPEATED_UTEST_TARGET" ] &&
+     [ "$key" != "REPEATED_UTEST_CLASS" ] &&
+     [ "$key" != "REPEATED_UTEST_METHODS" ] &&
+     [ "$key" != "REPEATED_UTEST_COUNT" ] &&
+     [ "$key" != "REPEATED_UTEST_STOP_ON_FAILURE" ] &&
+     [ "$key" != "REPEATED_DTEST_NAME" ] &&
+     [ "$key" != "REPEATED_DTEST_VNODES" ] &&
+     [ "$key" != "REPEATED_DTEST_COUNT" ] &&
+     [ "$key" != "REPEATED_DTEST_STOP_ON_FAILURE" ] &&
+     [ "$key" != "REPEATED_UPGRADE_DTEST_NAME" ] &&
+     [ "$key" != "REPEATED_UPGRADE_DTEST_COUNT" ] &&
+     [ "$key" != "REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE" ] &&
+     [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_CLASS" ] &&
+     [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_METHODS" ] &&
+     [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_COUNT" ] &&
+     [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_STOP_ON_FAILURE" ]; then
+    die "Unrecognised environment variable name: $key"
+  fi
   echo "Setting environment variable $key: $val"
   sed -i '' "s|- $key:.*|- $key: $val|" $BASEDIR/config.yml
 done
