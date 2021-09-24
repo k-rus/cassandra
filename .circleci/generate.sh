@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -42,7 +42,7 @@ die ()
 lowres=false
 midres=false
 highres=false
-envvars=()
+envvars=""
 while getopts "e:lmh" opt; do
   case $opt in
       l ) ($midres || $highres) && die "Cannot specify option -l after specifying options -m or -h"
@@ -55,7 +55,11 @@ while getopts "e:lmh" opt; do
           highres=true
           ;;
       e ) !($lowres || $midres || $highres) && die "Cannot specify option -e without first specifying options -l, -m or -h"
-          envvars+=($OPTARG)
+          if [ "x$envvars" = "x" ]; then
+            envvars="$OPTARG"
+          else
+            envvars="$envvars|$OPTARG"
+          fi
           ;;
       \?) die "Invalid option: -$OPTARG"
           ;;
@@ -108,11 +112,12 @@ fi
 
 # replace environment variables
 IFS='='
-for i in "${envvars[@]}"; do
-  read -a entry <<< "$i"
-  key=${entry[0]}
-  val=${entry[1]}
+echo "$envvars" | tr '|' '\n' | while read entry; do
+  set -- $entry
+  key=$1
+  val=$2
   echo "Setting environment variable $key: $val"
   sed -i '' "s|- $key:.*|- $key: $val|" $BASEDIR/config.yml
 done
+unset IFS
 
