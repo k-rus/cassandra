@@ -85,6 +85,33 @@ while getopts "e:almhf" opt; do
   esac
 done
 
+# validate environment variables
+if $has_env_vars && $check_env_vars; then
+  for entry in $(echo $env_vars | tr "|" "\n"); do
+    key=$(echo $entry | tr "=" "\n" | head -n 1)
+    if [ "$key" != "DTEST_REPO" ] &&
+       [ "$key" != "DTEST_BRANCH" ] &&
+       [ "$key" != "REPEATED_UTEST_TARGET" ] &&
+       [ "$key" != "REPEATED_UTEST_CLASS" ] &&
+       [ "$key" != "REPEATED_UTEST_METHODS" ] &&
+       [ "$key" != "REPEATED_UTEST_COUNT" ] &&
+       [ "$key" != "REPEATED_UTEST_STOP_ON_FAILURE" ] &&
+       [ "$key" != "REPEATED_DTEST_NAME" ] &&
+       [ "$key" != "REPEATED_DTEST_VNODES" ] &&
+       [ "$key" != "REPEATED_DTEST_COUNT" ] &&
+       [ "$key" != "REPEATED_DTEST_STOP_ON_FAILURE" ] &&
+       [ "$key" != "REPEATED_UPGRADE_DTEST_NAME" ] &&
+       [ "$key" != "REPEATED_UPGRADE_DTEST_COUNT" ] &&
+       [ "$key" != "REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE" ] &&
+       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_CLASS" ] &&
+       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_METHODS" ] &&
+       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_COUNT" ] &&
+       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_STOP_ON_FAILURE" ]; then
+      die "Unrecognised environment variable name: $key"
+    fi
+  done
+fi
+
 if $lowres; then
   ($all || $midres || $highres) && die "Cannot use option -l with options -a, -m or -h"
   echo "Generating new config.yml file with low resources from config-2_1.yml"
@@ -143,27 +170,6 @@ if $has_env_vars; then
     set -- $entry
     key=$1
     val=$2
-    if $check_env_vars &&
-       [ "$key" != "DTEST_REPO" ] &&
-       [ "$key" != "DTEST_BRANCH" ] &&
-       [ "$key" != "REPEATED_UTEST_TARGET" ] &&
-       [ "$key" != "REPEATED_UTEST_CLASS" ] &&
-       [ "$key" != "REPEATED_UTEST_METHODS" ] &&
-       [ "$key" != "REPEATED_UTEST_COUNT" ] &&
-       [ "$key" != "REPEATED_UTEST_STOP_ON_FAILURE" ] &&
-       [ "$key" != "REPEATED_DTEST_NAME" ] &&
-       [ "$key" != "REPEATED_DTEST_VNODES" ] &&
-       [ "$key" != "REPEATED_DTEST_COUNT" ] &&
-       [ "$key" != "REPEATED_DTEST_STOP_ON_FAILURE" ] &&
-       [ "$key" != "REPEATED_UPGRADE_DTEST_NAME" ] &&
-       [ "$key" != "REPEATED_UPGRADE_DTEST_COUNT" ] &&
-       [ "$key" != "REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE" ] &&
-       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_CLASS" ] &&
-       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_METHODS" ] &&
-       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_COUNT" ] &&
-       [ "$key" != "REPEATED_JVM_UPGRADE_DTEST_STOP_ON_FAILURE" ]; then
-      die "Unrecognised environment variable name: $key"
-    fi
     echo "Setting environment variable $key: $val"
     sed -i.bak "s|- $key:.*|- $key: $val|" $BASEDIR/config.yml
   done
