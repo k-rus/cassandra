@@ -84,6 +84,10 @@ while getopts "e:almhf" opt; do
           ;;
   esac
 done
+shift $((OPTIND-1))
+if [ "$#" -ne 0 ]; then
+    die "Unexpected arguments"
+fi
 
 # validate environment variables
 if $has_env_vars && $check_env_vars; then
