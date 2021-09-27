@@ -58,9 +58,9 @@ all=false
 lowres=false
 midres=false
 highres=false
-has_envvars=false
-envvars=""
-check_envvars=true
+env_vars=""
+has_env_vars=false
+check_env_vars=true
 while getopts "e:almhf" opt; do
   case $opt in
       a ) all=true
@@ -71,14 +71,14 @@ while getopts "e:almhf" opt; do
           ;;
       h ) highres=true
           ;;
-      e ) if [ !$has_envars ]; then
-            envvars="$OPTARG"
+      e ) if (!($has_env_vars)); then
+            env_vars="$OPTARG"
           else
-            envvars="$envvars|$OPTARG"
+            env_vars="$env_vars|$OPTARG"
           fi
-          has_envvars=true
+          has_env_vars=true
           ;;
-      f ) check_envvars=false
+      f ) check_env_vars=false
           ;;
       \?) die "Invalid option: -$OPTARG"
           ;;
@@ -109,7 +109,7 @@ elif $highres; then
   rm $BASEDIR/config-2_1.yml.HIGHRES $BASEDIR/config.yml.HIGHRES.tmp
 
 elif $all; then
-  ($lowres || $midres || $highres || $has_envars) && die "Cannot use option -a with options -l, -m, -h or -e"
+  ($lowres || $midres || $highres || $has_env_vars) && die "Cannot use option -a with options -l, -m, -h or -e"
   echo "Generating new config.yml file with low resources and LOWRES/MIDRES/HIGHRES templates from config-2_1.yml"
 
   # setup lowres
@@ -132,18 +132,18 @@ elif $all; then
   # copy lower into config.yml to make sure this gets updated
   cp $BASEDIR/config.yml.LOWRES $BASEDIR/config.yml
 
-elif [ ! $has_envvars ]; then
+elif (!($has_env_vars)); then
   print_help
 fi
 
 # replace environment variables
-if [ $has_envvars ]; then
+if $has_env_vars; then
   IFS='='
-  echo "$envvars" | tr '|' '\n' | while read entry; do
+  echo "$env_vars" | tr '|' '\n' | while read entry; do
     set -- $entry
     key=$1
     val=$2
-    if $check_envvars &&
+    if $check_env_vars &&
        [ "$key" != "DTEST_REPO" ] &&
        [ "$key" != "DTEST_BRANCH" ] &&
        [ "$key" != "REPEATED_UTEST_TARGET" ] &&
