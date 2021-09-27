@@ -35,7 +35,7 @@ print_help()
   echo "   -l Generate config.yml using low resources"
   echo "   -m Generate config.yml using mid resources"
   echo "   -h Generate config.yml using high resources"
-  echo "   -e <key=value> Enviroment variables to be used in the generated config.yml, e.g.:"
+  echo "   -e <key=value> Environment variables to be used in the generated config.yml, e.g.:"
   echo "                   -e DTEST_BRANCH=CASSANDRA-8272"
   echo "                   -e DTEST_REPO=git://github.com/adelapena/cassandra-dtest.git"
   echo "                   -e REPEATED_UTEST_TARGET=testsome"
@@ -51,7 +51,7 @@ print_help()
   echo "                  of examples in config-2_1.yml and/or the documentation."
   echo "                  If you want to specify multiple environment variables simply add"
   echo "                  multiple -e options. The flags -l/-m/-h should be used when using -e."
-  echo "   -f Stop checking that the enviroment variables are known"
+  echo "   -f Stop checking that the environment variables are known"
 }
 
 all=false
