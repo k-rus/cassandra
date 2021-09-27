@@ -165,7 +165,7 @@ if $has_env_vars; then
       die "Unrecognised environment variable name: $key"
     fi
     echo "Setting environment variable $key: $val"
-    sed -i '' "s|- $key:.*|- $key: $val|" $BASEDIR/config.yml
+    sed -i.bak "s|- $key:.*|- $key: $val|" $BASEDIR/config.yml
   done
   unset IFS
 fi
