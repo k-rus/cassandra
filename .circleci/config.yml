@@ -115,7 +115,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -290,7 +290,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -385,7 +385,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -494,7 +494,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -617,7 +617,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -712,7 +712,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -807,7 +807,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -903,7 +903,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -999,7 +999,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -1095,7 +1095,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -1190,7 +1190,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -1334,7 +1334,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -1457,7 +1457,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -1552,7 +1552,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -1651,7 +1651,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -1728,7 +1728,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -1804,7 +1804,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -1867,7 +1867,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -1976,7 +1976,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -2085,7 +2085,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -2184,7 +2184,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -2280,7 +2280,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -2335,7 +2335,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -2511,7 +2511,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -2588,7 +2588,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -2683,7 +2683,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -2793,7 +2793,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -2891,7 +2891,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -2986,7 +2986,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -3081,7 +3081,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -3144,7 +3144,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -3253,7 +3253,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -3307,7 +3307,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -3370,7 +3370,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -3468,7 +3468,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -3578,7 +3578,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -3753,7 +3753,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
@@ -3848,7 +3848,7 @@ jobs:
     - REPEATED_UTEST_COUNT: 100
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: replace_address_test.py::TestReplaceAddress::test_multi_dc_replace_with_rf1
-    - REPEATED_DTEST_VNODES: false
+    - REPEATED_DTEST_VNODES: true
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
     - REPEATED_UPGRADE_DTEST_NAME: null
