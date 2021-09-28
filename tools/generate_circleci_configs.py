@@ -14,7 +14,6 @@ class CiBranch():
         self.args = crepo.args
 
         self.circleci_folder = crepo.circleci_folder
-        self.config_2_1 = crepo.config_2_1
         self.config = crepo.config
 
         self.vnodes = vnodes and self.args.dtest_test
@@ -28,54 +27,43 @@ class CiBranch():
 
     def create_branch(self, base_name):
         self.base_name = base_name
-        self.branch_name = self.create_ci_branch_name()
-        self.repo.create_head(
-            self.branch_name, self.repo.remotes['upstream'].refs[base_name]).checkout()
+        if (self.args.remote):
+            self.branch_name = self.create_ci_branch_name()
+            self.repo.create_head(
+                self.branch_name, self.repo.remotes[self.args.remote].refs[base_name]).checkout()
+        else:
+            self.branch_name = base_name
+            self.repo.refs[base_name].checkout()
 
-    def on_vnodes(self):
-        with open(self.config_2_1, 'r') as file:
-            filedata = file.read()
-        file_replace = filedata.replace(
-            'REPEATED_DTEST_VNODES: false', 'REPEATED_DTEST_VNODES: true')
-        with open(self.config_2_1, 'w') as file:
-            file.write(file_replace)
+    def generate_config(self):
+        comm = [self.circleci_folder + "generate.sh"]
+        comm.append("-m")
+        comm.append("-e")
+        comm.append("DTEST_REPO="+self.args.dtest_repo)
+        comm.append("-e")
+        comm.append("DTEST_BRANCH="+self.args.dtest_branch)
 
-    def edit_config(self):
-        oss_repo_name = 'DTEST_REPO: git://github.com/apache/cassandra-dtest.git'
-        new_string_repo_name = 'DTEST_REPO: '+self.args.dtest_repo
-
-        with open(self.config_2_1, 'r') as file:
-            filedata = file.read()
-        file_replace = filedata.replace(oss_repo_name, new_string_repo_name)
-        file_replace = file_replace.replace(
-            'TEST_BRANCH: trunk', 'TEST_BRANCH: '+self.args.dtest_branch)
         if self.args.dtest_test:
-            file_replace = file_replace.replace(
-                'REPEATED_DTEST_NAME:\n', 'REPEATED_DTEST_NAME: ' + self.args.dtest_test+'\n')
-        with open(self.config_2_1, 'w') as file:
-            file.write(file_replace)
+            comm.append("-e")
+            comm.append("REPEATED_DTEST_NAME=" + self.args.dtest_test)
 
         if self.vnodes:
-            self.on_vnodes()
+            comm.append("-e")
+            comm.append("REPEATED_DTEST_VNODES=true")
 
-        subprocess.run(
-            [self.circleci_folder + 'generate.sh', '-m'],
-            cwd=self.circleci_folder)
+        subprocess.check_call(comm, cwd=self.circleci_folder)
 
     def commit(self):
-        message = ('DO NOT MERGE. CircleCI configuration for '+self.args.dtest_branch+' and ' +
+        message = ('DO NOT MERGE! CircleCI configuration for '+self.args.dtest_branch+' and ' +
                    self.base_name)
         if self.vnodes:
             message = message + ' with vnodes'
         else:
             message = message + ' without vnodes'
-        self.repo.git.add(self.config_2_1, self.config)
+        self.repo.git.add(self.config)
         self.repo.git.commit('-m', message)
 
     def push(self):
-        origin = self.repo.remotes['origin']
-        # self.repo.head.reference.set_tracking_branch(self.repo.head.reference)
-        # create remote ref
         self.repo.git.push('-u', 'origin', self.branch_name)
 
 
@@ -87,8 +75,15 @@ class CassandraRepo():
         self.original_branch = self.repo.head.name
 
         self.circleci_folder = self.repo.working_dir+'/.circleci/'
-        self.config_2_1 = self.circleci_folder + 'config-2_1.yml'
         self.config = self.circleci_folder + 'config.yml'
+
+    def one_branch(self, cass_branch, vnodes):
+        branch = CiBranch(self, vnodes)
+        branch.create_branch(cass_branch)
+        print(branch.branch_name)
+        branch.generate_config()
+        branch.commit()
+        branch.push()
 
     def do_the_job(self):
         if self.repo.is_dirty():
@@ -96,19 +91,9 @@ class CassandraRepo():
 
         try:
             for cass_branch in args.cassandra_branches:
-                branch = CiBranch(self, not is_no_vnodes(self.args))
-                branch.create_branch(cass_branch)
-                print(branch.branch_name)
-                branch.edit_config()
-                branch.commit()
-                branch.push()
+                self.one_branch(cass_branch, not is_no_vnodes(self.args))
                 if self.args.vnodes == 'all' and self.args.dtest_test:
-                    vnodes_branch = CiBranch(branch, True)
-                    vnodes_branch.create_branch(cass_branch)
-                    vnodes_branch.on_vnodes()
-                    vnodes_branch.commit()
-                    vnodes_branch.push()
-
+                    self.one_branch(cass_branch, True)
                 self.original_ref.checkout()
         except:
             self.original_ref.checkout()
@@ -136,6 +121,10 @@ parser.add_argument('--dtest-test', type=str, help='Name of PyTest test to repea
 parser.add_argument('--vnodes', choices=['vnodes', 'novnodes', 'all'],
                     help='Run dtest with or without vnodes or both', default='all')
 parser.add_argument('--cassandra-branches', nargs='*', type=str)
+parser.add_argument(
+    '--remote', type=str,
+    help='Name of git remote in cassandra repo. By default, use local branches')
+
 parser.add_argument('remove', nargs='?')
 
 args = parser.parse_args()
