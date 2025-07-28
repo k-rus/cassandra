@@ -69,6 +69,12 @@ public final class SchemaConstants
     /* replicate system keyspace names (the ones with a "true" replication strategy) */
     public static final Set<String> REPLICATED_SYSTEM_KEYSPACE_NAMES =
         ImmutableSet.of(TRACE_KEYSPACE_NAME, AUTH_KEYSPACE_NAME, DISTRIBUTED_KEYSPACE_NAME, METADATA_KEYSPACE_NAME);
+
+    /**
+     * Longest acceptable file name. Longer names lead to too long file name error.
+     */
+    public static final int FILENAME_LENGTH = 255;
+
     /**
      * The longest permissible KS or CF name.
      *

@@ -31,6 +31,7 @@ import org.apache.cassandra.index.sai.disk.v1.V1OnDiskFormat;
 import org.apache.cassandra.index.sai.utils.IndexIdentifier;
 import org.apache.cassandra.io.sstable.Component;
 import org.apache.cassandra.io.sstable.Descriptor;
+import org.apache.cassandra.schema.SchemaConstants;
 
 /**
  * Format version of indexing component, denoted as [major][minor]. Same forward-compatibility rules apply as to
@@ -153,5 +154,45 @@ public class Version implements Comparable<Version>
         stringBuilder.append(Descriptor.EXTENSION);
 
         return stringBuilder.toString();
+    }
+
+    /**
+     * Calculates the maximum allowed length for SAI index names to ensure generated filenames
+     * do not exceed the system's filename length limit (defined in {@link SchemaConstants#FILENAME_LENGTH}).
+     * This accounts for all additional components in the filename.
+     */
+    public static int calculateIndexNameAllowedLength()
+    {
+        int addedLength = getAddedLengthFromDescriptorAndVersion();
+        assert addedLength < SchemaConstants.FILENAME_LENGTH;
+        return SchemaConstants.FILENAME_LENGTH - addedLength;
+    }
+
+    /**
+     * Calculates the length of the added prefixes and suffixes from Descriptor constructor
+     * and {@link Version#defaultFileNameFormat}.
+     *
+     * @return the length of the added prefixes and suffixes
+     */
+    private static int getAddedLengthFromDescriptorAndVersion()
+    {
+        // Prefixes and suffixes constructed by Version.stargazerFileNameFormat
+        int versionNameLength = LATEST.toString().length();
+        // room for up to 999 generations
+        int addedLength = SAI_DESCRIPTOR.length()
+                          + versionNameLength
+                          + IndexComponent.CLUSTERING_KEY_BLOCK_OFFSETS.name.length()
+                          + SAI_SEPARATOR.length() * 3
+                          + Descriptor.EXTENSION.length();
+
+        // Prefixes from Descriptor constructor
+        int separatorLength = 1;
+        int indexVersionLength = 2;
+        int tableIdLength = 28;
+        addedLength += indexVersionLength
+                       + SSTableFormat.Type.BTI.name().length()
+                       + tableIdLength
+                       + separatorLength * 3;
+        return addedLength;
     }
 }

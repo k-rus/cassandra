@@ -229,8 +229,8 @@ public final class CreateIndexStatement extends AlterSchemaStatement
 
         AbstractType<?> baseType = column.type.unwrap();
 
-        if ((kind == IndexMetadata.Kind.CUSTOM) && !SchemaConstants.isValidName(target.column.toString()))
-            throw ire(INVALID_CUSTOM_INDEX_TARGET, target.column, SchemaConstants.NAME_LENGTH);
+//        if ((kind == IndexMetadata.Kind.CUSTOM) && !SchemaConstants.isValidName(target.column.toString()))
+//            throw ire(INVALID_CUSTOM_INDEX_TARGET, target.column, SchemaConstants.NAME_LENGTH);
 
         if (column.type.referencesDuration())
         {
