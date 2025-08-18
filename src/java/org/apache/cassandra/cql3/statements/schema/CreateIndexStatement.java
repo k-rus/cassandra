@@ -237,7 +237,7 @@ public final class CreateIndexStatement extends AlterSchemaStatement
 
         AbstractType<?> baseType = column.type.unwrap();
 
-        // This check will be removed with CASSANDRA-20235
+        // TODO: this check needs to be removed with CASSANDRA-20235
         if ((kind == IndexMetadata.Kind.CUSTOM))
             validateCustomIndexColumnName(target.column.toString());
 
